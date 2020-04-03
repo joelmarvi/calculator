@@ -1,1 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+*, *::before, *::after {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background: linear-gradient(to right, #252d92, #010636);
+}
+
+.calculator-grid {
+    display: grid;
+    justify-content: center;
+    /* Brings the buttons together compared to align-items */
+    align-content: center;
+    /* 100% of the view space */
+    min-height: 100vh; 
+    grid-template-columns: repeat(4, 100px);
+    /* minmax used so the output div can grow to accomodate content */
+    grid-template-rows: minmax(120px, auto) repeat(5, 100px);
+}
+
+.calculator-grid button {
+    cursor: pointer;
+    font-size: 2rem;
+    border: 1px solid white;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+.calculator-grid button:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.span-two {
+    grid-column: span 2;
+}
+
+.output {
+    /* Takes the entire width of the grid */
+    grid-column: 1 / -1;
+    background-color: rgba(114, 98, 98, 0.75);
+    /* Positioning the output content */
+    display: flex;
+    /* Moves them to the right */
+    align-items: flex-end;
+    /* Gives the divs better spacing */
+    justify-content: space-around;
+    flex-direction: column;
+    padding: 10px;
+    /* So the numbers wrap if too long */
+    word-wrap: break-word;
+    word-break: break-all;
+} 
+
+.output .previous-operand {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.5rem;
+}
+
+.output .current-operand {
+    color: white;
+    font-size: 2.5rem;
+}
