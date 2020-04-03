@@ -24,7 +24,14 @@ class Calculator {
     }
 
     chooseOperation(operation) {
-
+        // Doesn't let the calculator compute if current operand is empty
+        if(this.currentOperand === '') return;
+        if(this.previousOperand !== '') {
+            this.compute() //26:02
+        }
+        this.operation = operation;
+        this.previousOperand = this.currentOperand;
+        this.currentOperand = '';
     }
 
     compute() {
@@ -33,6 +40,7 @@ class Calculator {
 
     updateDisplay() {
         this.currentOperandTextElement.innerText = this.currentOperand;
+        this.previousOperandTextElement.innerText = this.previousOperand;
     }
 }
 const numberButtons = document.querySelectorAll('[data-number]');
@@ -48,6 +56,13 @@ const calculator = new Calculator(previousOperandTextElement, currentOperandText
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
         calculator.appendNumber(button.innerText);
+        calculator.updateDisplay();
+    });
+});
+
+operationButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        calculator.chooseOperation(button.innerText);
         calculator.updateDisplay();
     });
 });
