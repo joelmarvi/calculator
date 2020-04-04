@@ -63,9 +63,37 @@ class Calculator {
         this.previousOperand = '';
     }
 
+    // Formula for getting the decimal places on the numbers
+    getDisplayNumber(number) {
+      const stringNumber = number.toString();
+    // Break the number into integer and decimals
+      const integerDigits = parseFloat(stringNumber.split('.')[0]);
+      const decimalDigits = stringNumber.split('.')[1];
+      let integerDisplay;
+      if(isNaN(integerDigits)) {
+          integerDisplay = '';
+      } else {
+          integerDisplay = integerDigits.toLocaleString('en', {
+              maximumFractionDigits: 0
+          });
+      }
+      if(decimalDigits != null) {
+          return `${integerDisplay}.${decimalDigits}`;
+      } else {
+          return integerDisplay;
+      }
+    }
+
     updateDisplay() {
-        this.currentOperandTextElement.innerText = this.currentOperand;
-        this.previousOperandTextElement.innerText = this.previousOperand;
+        this.currentOperandTextElement.innerText = 
+            this.getDisplayNumber(this.currentOperand);
+        // Append the operation sign to the previousOperandTextElement
+        if(this.operation != null) {
+            this.previousOperandTextElement.innerText = 
+            `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`;
+        } else {
+            this.previousOperandTextElement.innerText = '';
+        }
     }
 }
 const numberButtons = document.querySelectorAll('[data-number]');
