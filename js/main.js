@@ -14,12 +14,13 @@ class Calculator {
     }
 
     delete() {
-
+  
     }
 
     appendNumber(number) {
-        // We want numbers to append so we turn them into strings
+        // We only want the user to be able to click the button once
         if(number === '.' && this.currentOperand.includes('.')) return;
+        // We want numbers to append so we turn them into strings
         this.currentOperand = this.currentOperand.toString() + number.toString();
     }
 
@@ -35,7 +36,31 @@ class Calculator {
     }
 
     compute() {
-
+        let computation;
+        // Convert the text into numbers
+        const prev = parseFloat(this.previousOperand);
+        const current = parseFloat(this.currentOperand);
+        // So the function doesn't compute without any values
+        if(isNaN(prev) || isNaN(current)) return;
+        switch(this.operation) {
+            case '+':
+                computation = prev + current;
+                break;
+            case '-':
+                computation = prev - current;
+                break;
+            case 'x':
+                computation = prev * current;
+                break;
+            case '÷':
+                computation = prev / current;
+                break;  
+            default:
+                return; // The function doesn't run if we have an invalid case      
+        }
+        this.currentOperand = computation;
+        this.operation = undefined;
+        this.previousOperand = '';
     }
 
     updateDisplay() {
@@ -66,3 +91,13 @@ operationButtons.forEach(button => {
         calculator.updateDisplay();
     });
 });
+
+equalsButton.addEventListener('click', button => {
+    calculator.compute();
+    calculator.updateDisplay();
+})
+
+allClearButton.addEventListener('click', button => {
+    calculator.clear();
+    calculator.updateDisplay();
+})
